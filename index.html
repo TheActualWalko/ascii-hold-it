@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .asciiholdit {
+        position: relative;
+        width: 420px;
+        height: 400px;
+        overflow: hidden;
+      }
+      .asciiholdit pre {
+        background-color: #333;
+        color: #fff;
+        font-size: 14px;
+        line-height: 16px;
+        filter: blur(8px);
+        position:relative;
+        margin-top: -4px;
+        margin-left: -3px;
+      }
+      .asciiholdit img {
+        display: block;
+        position: absolute;
+        top: 0px;
+        bottom: 4px;
+        left: 0px;
+        right: 4px;
+        opacity: 0;
+        width: 420px;
+        height: 400px;
+        transition: opacity 1s 2s;
+      }
+      .asciiholdit img.visible {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Here be cat:</h2>
+    <img data-asciiholdit src='cat.jpg' />
+    <script>
+      setTimeout(()=>document.querySelectorAll('img').forEach(x => x.className = 'visible'))
+    </script>
+  </body>
+</html>
