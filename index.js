@@ -4,63 +4,52 @@ const load = (path) =>
     getPixels(path, (err, pixels) => 
       err 
         ? rej(err) 
-        : res(pixels)
-    )
-  );
+        : res(pixels)));
 
-const ratio = (byte) => byte/255;
-const average = (xs) => xs.reduce((s,x) => s+x, 0) / xs.length
+const ratio = byte => byte/255;
+const average = xs => xs.reduce((s,x) => s+x, 0) / xs.length
 const readChannels = (pixels, x, y) => [0,1,2].map(i => pixels.get(x,y,i))
 
-const nest = (pixels) => {
+const nest = pixels => {
   const [width, height, numChannels] = pixels.shape;
   const output = [];
-  for (let x = 0; x < width; x ++) {
+  for (let y = 0; y < height; y ++) {
     output.push([]);
-    for (let y = 0; y < height; y ++) {
-      output[x][y] = readChannels(pixels, x, y, numChannels);
+    for (let x = 0; x < width; x ++) {
+      output[y][x] = readChannels(pixels, x, y, numChannels);
     }
   }
   return output;
 }
 
-const grayscale = (grid) => 
-  grid.map(
-    column => column.map(
-      channels => 
+const grayscale = multiChannelGrid => 
+  multiChannelGrid.map(
+    row => 
+      row.map(channels => 
         channels.length === 4
           ? ratio(average(channels.slice(0,3))) * ratio(channels[3])
-          : ratio(average(channels))
-    )
-  );
+          : ratio(average(channels))));
 
-const resFactor = (factorX, factorY = factorX) => (grid) => {
-  const output = [];
-  for (let x = 0; x < grid.length; x += factorX) {
-    output.push([]);
-    for (let y = 0; y < grid[x].length; y += factorY) {
-      output[x/factorX][y/factorY] = grid[x][y];
-    }
-  }
-  return output;
-}
+const everyNth = (array, n) => array.filter((x, i) => !(i % n))
+
+const resFactor = (factorX, factorY = factorX) => 
+  grid =>
+    everyNth(grid, factorY)
+      .map(row => 
+        everyNth(row, factorX));
 
 const charset = "   .-*###";
 
-const ascii = (grid) => {
-  let output = "";
-  for (let y = 0; y < grid[0].length; y ++) {
-    for (let x = 0; x < grid.length; x ++) {
-      output += charset[Math.floor((charset.length - 1) * grid[x][y])]
-    }
-    if (y < grid[0].length-1) {
-      output += '\n';
-    }
-  }
-  return output;
-};
+const closestChar = (ratio) => charset[Math.floor((charset.length - 1) * ratio)]
 
-module.exports = (path) => load(path)
+const ascii = valueGrid => 
+  valueGrid
+    .map((row) => 
+      row.map(closestChar)
+        .join(''))
+    .join('\n')
+
+module.exports = path => load(path)
   .then(nest)
   .then(resFactor(8, 16))
   .then(grayscale)
