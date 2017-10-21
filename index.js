@@ -13,7 +13,6 @@ const readChannels = (pixels, x, y) => [0,1,2].map(i => pixels.get(x,y,i))
 
 const nest = (xRatio, yRatio) => pixels => {
   const [width, height, numChannels] = pixels.shape;
-  console.log(width, height, numChannels, xRatio, yRatio);
   const output = [];
   for (let y = 0; y < height; y += yRatio) {
     const row = [];
