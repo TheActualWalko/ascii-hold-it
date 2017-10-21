@@ -13,15 +13,16 @@ const buildHomepage = () => {
     images.push({
       src: $(el).attr('src'),
       classname: $(el).attr('class'),
+      scale: $(el).attr('data-asciiholdit'),
       el
     })
   });
   return Promise.all(
     images.map(
-      ({src, el, classname}) => 
-        getAsciiPlaceholder(src).then(
+      ({src, el, classname, scale}) => 
+        getAsciiPlaceholder(src, scale).then(
           placeholder => $(el).replaceWith(`
-            <div class="asciiholdit ${classname}">
+            <div class="asciiholdit ${classname}" style="font-size: ${(7/4)*scale}px; line-height: ${2*scale}px;">
               <pre>${placeholder}</pre>
               <img src="${src}" />
             </div>

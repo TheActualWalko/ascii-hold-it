@@ -32,11 +32,11 @@ const grayscale = multiChannelGrid =>
 
 const everyNth = (array, n) => array.filter((x, i) => !(i % n))
 
-const resFactor = (factorX, factorY = factorX) => 
+const rescale = (xFactor, yFactor = xFactor) => 
   grid =>
-    everyNth(grid, factorY)
+    everyNth(grid, yFactor)
       .map(row => 
-        everyNth(row, factorX));
+        everyNth(row, xFactor));
 
 const charset = "   .-*###";
 
@@ -49,9 +49,9 @@ const ascii = valueGrid =>
         .join(''))
     .join('\n')
 
-module.exports = path => load(path)
+module.exports = (path, scale) => load(path)
   .then(nest)
-  .then(resFactor(8, 16))
+  .then(rescale(scale, 2*scale))
   .then(grayscale)
   .then(ascii)
   .catch(e => console.error(e))

@@ -11,8 +11,6 @@
       .asciiholdit pre {
         background-color: #333;
         color: #fff;
-        font-size: 14px;
-        line-height: 16px;
         filter: blur(8px);
         position:relative;
         margin-top: -4px;
@@ -37,7 +35,10 @@
   </head>
   <body>
     <h2>Here be cat:</h2>
-    <img data-asciiholdit src='cat.jpg' />
+    <img data-asciiholdit='4' src='cat.jpg' />
+    <img data-asciiholdit='8' src='cat.jpg' />
+    <img data-asciiholdit='12' src='cat.jpg' />
+    <img data-asciiholdit='16' src='cat.jpg' />
     <script>
       setTimeout(()=>document.querySelectorAll('img').forEach(x => x.className = 'visible'))
     </script>
