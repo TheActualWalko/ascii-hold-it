@@ -8,23 +8,27 @@ const app = express();
 
 const buildHomepage = () => {
   const $ = cheerio.load(fs.readFileSync('index.html', 'utf8'));
-  const srcs = [];
-  const elems = [];
-  $('[data-asciiholdit]').each((i, element) => {
-    srcs.push($(element).attr('src'));
-    elems.push(element);
+  const images = [];
+  $('[data-asciiholdit]').each((i, el) => {
+    images.push({
+      src: $(el).attr('src'),
+      classname: $(el).attr('class'),
+      el
+    })
   });
-  return Promise
-    .all(srcs.map(s => getAsciiPlaceholder(s)))
-    .then((placeholders) => elems.forEach((e, i) => {
-      $(e).replaceWith(`
-        <div class="asciiholdit ${$(e).attr('class')}">
-          <pre>${placeholders[i]}</pre>
-          <img src="${srcs[i]}" />
-        </div>
-      `)
-    }))
-    .then(() => $.html());
+  return Promise.all(
+    images.map(
+      ({src, el, classname}) => 
+        getAsciiPlaceholder(src).then(
+          placeholder => $(el).replaceWith(`
+            <div class="asciiholdit ${classname}">
+              <pre>${placeholder}</pre>
+              <img src="${src}" />
+            </div>
+          `)
+      )
+    )
+  ).then(() => $.html());
 }
 
 app.get('/', (req, res) => buildHomepage().then(res.send.bind(res)));

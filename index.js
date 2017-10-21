@@ -8,27 +8,31 @@ const load = (path) =>
     )
   );
 
-const rgbValue = (r,g,b) => ((r + g + b) / (255 * 3))
+const ratio = (byte) => byte/255;
+const average = (xs) => xs.reduce((s,x) => s+x, 0) / xs.length
+const readChannels = (pixels, x, y) => [0,1,2].map(i => pixels.get(x,y,i))
 
-const grayscale = (pixels) => {
+const nest = (pixels) => {
   const [width, height, numChannels] = pixels.shape;
   const output = [];
   for (let x = 0; x < width; x ++) {
     output.push([]);
     for (let y = 0; y < height; y ++) {
-      if (numChannels === 1) { // first divided by 255
-        output[x][y] = pixels.get(x,y,0) / 255;
-      } else if (numChannels === 4) {  // sum the first 3, divide by 255, multiply by 4th/255
-        const gray = rgbValue(pixels.get(x,y,0), pixels.get(x,y,1), pixels.get(x,y,2));
-        const alpha = pixels.get(x,y,3) / 255;
-        output[x][y] = gray * alpha;
-      } else { // sum the first 3, divide by 255
-        output[x][y] = rgbValue(pixels.get(x,y,0), pixels.get(x,y,1), pixels.get(x,y,2));
-      }
+      output[x][y] = readChannels(pixels, x, y, numChannels);
     }
   }
   return output;
 }
+
+const grayscale = (grid) => 
+  grid.map(
+    column => column.map(
+      channels => 
+        channels.length === 4
+          ? ratio(average(channels.slice(0,3))) * ratio(channels[3])
+          : ratio(average(channels))
+    )
+  );
 
 const resFactor = (factorX, factorY = factorX) => (grid) => {
   const output = [];
@@ -57,7 +61,8 @@ const ascii = (grid) => {
 };
 
 module.exports = (path) => load(path)
-  .then(grayscale)
+  .then(nest)
   .then(resFactor(8, 16))
+  .then(grayscale)
   .then(ascii)
   .catch(e => console.error(e))
