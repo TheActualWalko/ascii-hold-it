@@ -39,6 +39,5 @@ const buildHomepage = () => {
 }
 
 app.get('/', (req, res) => buildHomepage().then(res.send.bind(res)));
-app.get('/dew.jpg', (req, res) => res.sendFile(resolve(__dirname, `dew.jpg`)));
-app.get('/cat.jpg', (req, res) => res.sendFile(resolve(__dirname, `cat.jpg`)));
+app.use('/pics', express.static('pics'));
 app.listen(3000, () => console.log('Listening on 3000'));
