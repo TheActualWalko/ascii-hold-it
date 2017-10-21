@@ -4,17 +4,15 @@
     <style>
       .asciiholdit {
         position: relative;
-        width: 420px;
-        height: 400px;
         overflow: hidden;
+        display: inline-block;
+        vertical-align: top;
       }
       .asciiholdit pre {
         background-color: #333;
         color: #fff;
-        filter: blur(8px);
         position:relative;
-        margin-top: -4px;
-        margin-left: -3px;
+        font-family: 'Courier New';
       }
       .asciiholdit img {
         display: block;
@@ -24,8 +22,6 @@
         left: 0px;
         right: 4px;
         opacity: 0;
-        width: 420px;
-        height: 400px;
         transition: opacity 1s 1s;
       }
       .asciiholdit img.visible {
@@ -34,11 +30,9 @@
     </style>
   </head>
   <body>
-    <h2>Here be cat:</h2>
-    <img data-asciiholdit='4' src='cat.jpg' />
-    <img data-asciiholdit='8' src='cat.jpg' />
-    <img data-asciiholdit='12' src='cat.jpg' />
-    <img data-asciiholdit='16' src='cat.jpg' />
+    <h2>Here be dew:</h2>
+    <img data-asciiholdit='2' src='cat.jpg' />
+    <img data-asciiholdit='2' src='dew.jpg' />
     <script>
       setTimeout(()=>document.querySelectorAll('img').forEach(x => x.className = 'visible'))
     </script>
