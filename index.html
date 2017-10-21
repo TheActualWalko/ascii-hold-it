@@ -22,7 +22,10 @@
         left: 0px;
         right: 4px;
         opacity: 0;
-        transition: opacity 1s 1s;
+        transition: opacity 0.25s;
+      }
+      .asciiholdit:hover img {
+        opacity: 1;
       }
       .asciiholdit img.visible {
         opacity: 1;
@@ -30,12 +33,12 @@
     </style>
   </head>
   <body>
-    <h2>Here be dew:</h2>
+    <h1>Mouseover to show image</h1>
+    <h2>Lvl 2 Cat:</h2>
     <img data-asciiholdit='2' src='pics/cat.jpg' />
+    <h2>Lvl 4 Cat:</h2>
     <img data-asciiholdit='4' src='pics/cat.jpg' />
+    <h2>Lvl 2 Dew:</h2>
     <img data-asciiholdit='2' src='pics/dew.jpg' />
-    <script>
-      setTimeout(()=>document.querySelectorAll('img').forEach(x => x.className = 'visible'))
-    </script>
   </body>
 </html>

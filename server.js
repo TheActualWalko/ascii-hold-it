@@ -1,4 +1,4 @@
-const getAsciiPlaceholder = require('./index.js');
+const getAsciiPlaceholder = require('./to-ascii.js');
 const {resolve} = require('path');
 const fs = require('fs');
 const express = require('express');
