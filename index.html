@@ -2,43 +2,33 @@
 <html>
   <head>
     <style>
-      .asciiholdit {
-        position: relative;
-        overflow: hidden;
-        display: inline-block;
-        vertical-align: top;
+      body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
-      .asciiholdit pre {
-        background-color: #333;
-        color: #fff;
-        position:relative;
-        font-family: 'Courier New';
+
+      article p {
+        margin-bottom: 20px;
       }
-      .asciiholdit img {
-        display: block;
-        position: absolute;
-        top: 0px;
-        bottom: 4px;
-        left: 0px;
-        right: 4px;
-        opacity: 0;
-        transition: opacity 0.25s;
-      }
-      .asciiholdit:hover img {
-        opacity: 1;
-      }
-      .asciiholdit img.visible {
-        opacity: 1;
+
+      article img {
+        width: 50%;
+        height: auto;
       }
     </style>
   </head>
   <body>
-    <h1>Mouseover to show image</h1>
-    <h2>Lvl 2 Cat:</h2>
-    <img data-asciiholdit='2' src='pics/cat.jpg' />
-    <h2>Lvl 4 Cat:</h2>
-    <img data-asciiholdit='4' src='pics/cat.jpg' />
-    <h2>Lvl 2 Dew:</h2>
-    <img data-asciiholdit='2' src='pics/dew.jpg' />
+    <article>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi voluptas odit illo velit assumenda dolor minima vero repellat. Fuga, distinctio.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta non iste animi, facere saepe magnam earum voluptatum laboriosam repellendus ad aut placeat voluptatibus quae error nulla assumenda reiciendis nam, quo. In sapiente quibusdam reiciendis assumenda, quas laboriosam amet iusto necessitatibus?</p>
+      <figure>
+        <img data-asciiholdit='2' src='pics/cat.jpg' />
+        <figcaption>Cat</figcaption>
+      </figure>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione ea id excepturi quasi pariatur qui nam itaque odit, eius quis reiciendis odio dicta quaerat rem quidem consectetur aut facere veritatis. Repudiandae maxime rem accusamus iusto praesentium itaque nam similique fugit harum quasi nostrum cumque, nulla, expedita eos magni laborum eius.</p>
+      <figure>
+        <img data-asciiholdit='2' src='pics/dew.jpg' />
+        <figcaption>Dew</figcaption>
+      </figure>
+    </article>
   </body>
 </html>
