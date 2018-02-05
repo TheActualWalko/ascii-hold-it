@@ -2,7 +2,7 @@ const getAsciiPlaceholder = require('./to-ascii.js');
 const cheerio = require('cheerio');
 const fs = require('fs');
 
-module.exports = (filename) => (req, res, next) => {
+module.exports = (filename) => {
   const $ = cheerio.load(fs.readFileSync(filename, 'utf8'));
   const images = [];
   $('[data-asciiholdit]').each((i, el) => {
@@ -15,7 +15,7 @@ module.exports = (filename) => (req, res, next) => {
       el
     })
   });
-  Promise.all(
+  return Promise.all(
     images.map(
       ({src, el, classname, scale}, index) => 
         getAsciiPlaceholder(src, scale, 1.5 * scale).then(
@@ -41,6 +41,11 @@ module.exports = (filename) => (req, res, next) => {
           font-family: 'Courier New';
           opacity: 1;
           transition: opacity 0.5s ease;
+          padding: 0;
+          margin: 0;
+          overflow: hidden;
+          left: auto;
+          right: auto;
         }
 
         .asciiholdit-hidden {
@@ -55,7 +60,7 @@ module.exports = (filename) => (req, res, next) => {
             const index = img.getAttribute('data-asciiholdit-index');
             if (firstLoad) {
               img.insertAdjacentHTML(
-                'afterend', 
+                'beforeBegin', 
                 getAsciiPlaceholder(index)
               );
             }
@@ -89,6 +94,6 @@ module.exports = (filename) => (req, res, next) => {
         });
       </script>
     `);
-    res.send($.html());
+    return res.send($.html());
   });
 }
