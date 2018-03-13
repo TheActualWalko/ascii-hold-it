@@ -4,7 +4,6 @@ const app = express();
 const asciiholdit = require('./middleware.js');
 
 app.get('/', asciiholdit('index.html'));
-app.get('/blog', asciiholdit('blog.html'));
 app.use('/pics', (req,res,next) => setTimeout(next, 3000));
 app.use('/pics', express.static('pics'));
 app.use('/css', express.static('css'));
