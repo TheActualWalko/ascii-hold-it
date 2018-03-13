@@ -1,6 +1,9 @@
 # How to run it:
 `npm i && node server.js`
 
+# Code example:
+`app.get('/', asciiholdit('index.html'));`
+
 # What this is:
 Asciiholdit creates and sizes plaintext ASCII art image placeholders for <img> tags in html files.
 
