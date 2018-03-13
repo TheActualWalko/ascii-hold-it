@@ -17,7 +17,7 @@ module.exports = (filename) => {
   });
   return Promise.all(
     images.map(
-      ({src, el, classname, scale}, index) => 
+      ({src, el, classname, scale}, index) =>
         getAsciiPlaceholder(src, scale, 1.5 * scale).then(
           placeholder => `
           <pre class="asciiholdit" data-asciiholdit-index="${index}" style="
@@ -56,11 +56,11 @@ module.exports = (filename) => {
     $('body').append(`
       <script>
         const doPlaceholder = (firstLoad) => {
-          document.querySelectorAll('img[data-asciiholdit]').forEach(img => {  
+          document.querySelectorAll('img[data-asciiholdit]').forEach(img => {
             const index = img.getAttribute('data-asciiholdit-index');
             if (firstLoad) {
               img.insertAdjacentHTML(
-                'beforeBegin', 
+                'beforeBegin',
                 getAsciiPlaceholder(index)
               );
             }
@@ -74,7 +74,7 @@ module.exports = (filename) => {
               img.style.height = (placeholder.clientHeight * scaleFactor) + 'px';
               img.className = img.className.replace('asciiholdit-hidden', '');
             } else {
-              
+
             }
             placeholder.style.top = \`\${img.offsetTop}px\`;
             if (firstLoad) {
@@ -94,6 +94,6 @@ module.exports = (filename) => {
         });
       </script>
     `);
-    return res.send($.html());
+    return $.html();
   });
 }
