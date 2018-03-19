@@ -5,7 +5,7 @@
 `app.get('/', asciiholdit('index.html'));`
 
 # What this is:
-Asciiholdit creates and sizes plaintext ASCII art image placeholders for <img> tags in html files.
+Asciiholdit creates and sizes plaintext ASCII art image placeholders for `<img>` tags in html files.
 
 # How it works:
 Asciiholdit is a server-side application which adds a bit of javascript to the static HTML files of your choosing.
